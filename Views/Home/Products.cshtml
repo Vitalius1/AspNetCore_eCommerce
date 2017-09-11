@@ -1,0 +1,55 @@
+@{
+    ViewData["Title"] = "Products | Store";
+}
+@model eCommerce.Models.ProductViewModel
+<nav class="navbar navbar-default">
+  <div class="container-fluid">
+    <ul class="nav navbar-nav">
+      <li><a href="/">Dashboard</a></li>
+      <li><a href="/products">Products</a></li>
+      <li><a href="/orders">Orders</a></li>
+      <li><a href="/customers">Customers</a></li>
+      <li><a href="/settings">Settings</a></li>
+    </ul>
+  </div>
+</nav>
+
+<div id="product-form">
+  <h1>Search</h1>
+  <h4><u>Add a new product</u></h4>
+  
+  <form asp-controller="Home" asp-action="AddProduct" method="post">
+        <span>Name:</span><br>
+        <input asp-for="ProductName" placeholder="name..."/>
+        <span asp-validation-for="ProductName"></span>
+        <br>
+        <br>
+        <span>Image (url):</span><br>
+        <input asp-for="ImageUrl" placeholder="http://"/>
+        <span asp-validation-for="ImageUrl"></span>
+        <br>
+        <br>
+        <span>Description:</span><br>
+        <textarea asp-for="Description" cols="19"></textarea>
+        <span asp-validation-for="Description"></span>
+        <br>
+        <br>
+        <span>Initial Quantity:</span><br>
+        <input asp-for="TotalQty" type="number" value="1" step="1" size="6"/>
+        <span asp-validation-for="TotalQty"></span><br><br>
+        
+        <div><input type="submit" value="Create"/></div>
+  </form>
+</div>
+<div id="products-list">
+  @{
+    foreach(var p in ViewBag.allProducts)
+    {
+      <div class="prod">
+        <img src="@p.ImageUrl" alt="">
+        <span>@p.ProductName</span>
+        <span>(@p.TotalQty left)</span>
+      </div>
+    }
+  }
+</div>

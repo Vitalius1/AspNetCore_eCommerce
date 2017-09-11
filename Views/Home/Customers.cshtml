@@ -1,0 +1,46 @@
+@{
+    ViewData["Title"] = "Customers | Store";
+}
+@model List<eCommerce.Models.Customer>
+
+<nav class="navbar navbar-default">
+  <div class="container-fluid">
+    <ul class="nav navbar-nav">
+      <li><a href="/">Dashboard</a></li>
+      <li><a href="/products">Products</a></li>
+      <li><a href="/orders">Orders</a></li>
+      <li><a href="/customers">Customers</a></li>
+      <li><a href="/settings">Settings</a></li>
+    </ul>
+  </div>
+</nav>
+
+<h3><u>Add a new customer</u></h3>
+<form action="/addCustomer" method="post">
+  <label for="custName">Customer Name:</label>
+  <input type="text" name="custName">
+  <input type="submit" value="Add" class="add-button">
+  <span>@ViewBag.NoEmpty</span><span>@ViewBag.Exist</span>
+</form>
+
+<h4>Search here</h4>
+
+<table>
+  <thead>
+    <th>Customer Name</th>
+    <th>Created Date</th>
+    <th>Actions</th>
+  </thead>
+  <tbody>
+    @{
+      foreach(var c in @Model)
+      {
+        <tr>
+          <td>@c.CustomerName</td>
+          <td>@c.CreatedAt.Date.ToString("MMM dd yyy")</td>
+          <td><a href="/remove/@c.CustomerId"><button class="remove-button">Remove</button></a></td>
+        </tr>
+      }
+    }
+  </tbody>
+</table>

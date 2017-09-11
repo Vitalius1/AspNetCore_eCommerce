@@ -1,0 +1,63 @@
+@{
+    ViewData["Title"] = "Dashboard of my SPA | Store";
+}
+@model List<eCommerce.Models.Order>
+<nav class="navbar navbar-default">
+  <div class="container-fluid">
+    <ul class="nav navbar-nav">
+      <li><a href="/">Dashboard</a></li>
+      <li><a href="/products">Products</a></li>
+      <li><a href="/orders">Orders</a></li>
+      <li><a href="/customers">Customers</a></li>
+      <li><a href="/settings">Settings</a></li>
+    </ul>
+  </div>
+</nav>
+
+<h3><u>Add a new order</u></h3>
+
+<form action="/addOrder" method="post">
+  
+  <label for="custId">Customer</label>
+  <select name="custId">
+    @foreach(var c in ViewBag.AllCustomers){
+      <option value="@c.CustomerId">@c.CustomerName</option>
+    }
+  </select><br>
+  
+  <label for="Qty">Order</label>
+  <input type="number" name="Qty" value="1" step="1" style="width: 3em">
+  
+  <select name="prodId">
+    @foreach(var p in ViewBag.AllProducts){
+      <option value="@p.ProductId">@p.ProductName</option>
+    }
+  </select><br>
+  
+  <input type="submit" value="Order" class="add-button">
+  <span>@ViewBag.ErrorQty</span><span></span>
+</form><br><br>
+
+<h4>Search here</h4>
+
+<table>
+  <thead>
+    <th>Customer Name</th>
+    <th>Product</th>
+    <th>Quantity</th>
+    <th>Date</th>
+  </thead>
+  <tbody>
+    @{
+      foreach(var o in @Model)
+      {
+        <tr>
+          <td>@o.Customer.CustomerName</td>
+          <td>@o.Product.ProductName</td>
+          <td>@o.OrderedQty</td>
+          <td>@o.CreatedAt.Date.ToString("MMM dd yyy")</td>
+        </tr>
+      }
+    }
+  </tbody>
+</table>
